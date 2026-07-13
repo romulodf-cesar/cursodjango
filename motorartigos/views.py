@@ -1,14 +1,13 @@
-from django.shortcuts import render
-#from django.http import HttpResponse
-from motorartigos.models import Autor,Artigo,EixoTecnologia
-from django.db.models import Q # Importante para buscas complexas
-
+from django.shortcuts import render, get_object_or_404  # 👈 Adicionado get_object_or_404
+from motorartigos.models import Autor, Artigo, EixoTecnologia
+from django.db.models import Q 
 
 def index(request):
-    artigos_base = Artigo.objects.filter(publicada=True)
+    # ⚡ MELHORIA DE PERFORMANCE: Adicionado select_related
+    # Como você busca o nome do autor e do eixo na busca (e provavelmente nos cards),
+    # o select_related traz tudo em uma única consulta ao banco, evitando o problema de "N+1 queries"
+    artigos_base = Artigo.objects.filter(publicada=True).select_related('id_fk_autor', 'id_fk_eixo')
     
-    # CORREÇÃO AQUI: Busca diretamente da tabela de eixos. 
-    # Assim, virão apenas os 3 eixos cadastrados, sem duplicar!
     eixos = EixoTecnologia.objects.all()
 
     termo_busca = request.GET.get('busca')
@@ -16,11 +15,9 @@ def index(request):
 
     artigos_todos = artigos_base
 
-    # Se clicou em um eixo específico, filtra por ele
     if eixo_id:
         artigos_todos = artigos_todos.filter(id_fk_eixo__id=eixo_id)
 
-    # Se digitou algo na barra de pesquisa
     if termo_busca:
         artigos_todos = artigos_todos.filter(
             Q(titulo__icontains=termo_busca) | 
@@ -34,14 +31,20 @@ def index(request):
     contexto = {
         'artigos': artigos_todos,
         'artigos_recentes': artigos_recentes,
-        'eixos': eixos,                           
+        'eixos': eixos,                                      
         'eixo_selecionado': eixo_id,               
-        'termo_busca': termo_busca                 
+        'termo_busca': termo_busca                                 
     }
     return render(request, 'motorartigos/index.html', contexto)
 
-def artigo(request):
-    return render(request,'motorartigos/artigo.html')
 
-def artigo(request):
-    return render(request,'motorartigos/artigo.html')
+# 🛠️ CORREÇÃO AQUI: Sua view de detalhe do artigo estava duplicada e vazia.
+# Ela precisa receber o ID do artigo para buscar os dados corretos no banco e mandar pro template.
+def artigo(request, artigo_id):
+    # Busca o artigo pelo ID ou retorna uma página 404 caso ele não exista
+    artigo_selecionado = get_object_or_404(Artigo, id=artigo_id, publicada=True)
+    
+    contexto = {
+        'artigo': artigo_selecionado
+    }
+    return render(request, 'motorartigos/artigo.html', contexto)

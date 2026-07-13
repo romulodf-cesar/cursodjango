@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'motorartigos',
     'tinymce',
+    'imagekit',
+    'leads',
 ]
 
 
@@ -94,9 +96,9 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'djangoartigos', # O nome do banco de dados MySQL que você criou
+        'NAME': 'motorartigos', # O nome do banco de dados MySQL que você criou
         'USER': 'root',    # Seu usuário MySQL
-        'PASSWORD': '',  # Sua senha MySQL
+        'PASSWORD': 'root',  # Sua senha MySQL
         'HOST': 'localhost',        # Ou o IP/nome do host onde o MySQL está rodando
         'PORT': '3306',             # A porta do MySQL (3306 é a padrão)
         # Outras opções podem ser adicionadas em 'OPTIONS' se necessário

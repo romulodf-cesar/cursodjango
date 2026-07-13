@@ -1,6 +1,8 @@
 from django.db import models
 from tinymce.models import HTMLField
 from django.urls import reverse
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 
 class Autor(models.Model):
@@ -37,6 +39,13 @@ class Artigo(models.Model):
         default='Sem título'
     )
     foto = models.ImageField(upload_to="fotos/%Y/%m/%d/", blank=True)
+    # 2. Adicione este campo virtual. Ele lerá a sua 'foto' e criará o thumbnail em cache
+    foto_card = ImageSpecField(
+        source='foto',
+        processors=[ResizeToFill(400, 250)], # Redimensiona e corta para encaixar no card
+        format='JPEG',
+        options={'quality': 85}
+    )
     publicada = models.BooleanField(default=False)
     TAG_NIVEL = [
         ("B", "Básico"),
