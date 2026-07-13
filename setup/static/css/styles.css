@@ -261,3 +261,13 @@ body {
     border-radius: 8px;
     margin: 2rem 0;
 }
+
+.btn-outline-light {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-outline-light:hover {
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.5); /* Um brilho suave azulado */
+    background: rgba(255, 255, 255, 0.1);
+}

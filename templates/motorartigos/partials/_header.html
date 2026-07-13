@@ -2,13 +2,21 @@
 
 <nav class="navbar navbar-dark bg-dark-custom pt-4">
     <div class="container d-flex justify-content-between align-items-center">
-        <span class="navbar-brand fw-bold fs-4 text-white">DevBlog <span class="text-secondary fs-5 fw-normal">Django</span></span>
-        <span class="badge rounded-pill badge-status px-3 py-2">Mapeamento de Modelos Django Ativo</span>
+        <span class="navbar-brand fw-bold fs-4 text-white">DevBlog <span
+                class="text-secondary fs-5 fw-normal">Django</span></span>
+        
+            <a href="{% url 'login' %}" class="btn btn-outline-light rounded-pill px-4 py-2"
+                style="text-decoration: none; font-weight: 500;">
+                <i class="fas fa-user-circle me-2"></i> Login de Associados
+            </a>
+    
     </div>
 </nav>
 
 <header class="container my-4 text-secondary">
-    <p class="fs-5 max-w-text">Descubra artigos profundos criados por especialistas e líderes de transformação. Filtre pelo seu eixo ou procure termos de interesse.</p>
+    <p class="fs-5 max-w-text">Descubra artigos profundos criados por especialistas e líderes de transformação. Filtre
+        pelo seu eixo ou procure termos de interesse.</p>
+
 </header>
 
 <section class="container my-5">
@@ -16,13 +24,12 @@
     <form method="GET" action="{% url 'index' %}">
         <!-- Mantém o filtro de eixo ativo ao pesquisar texto -->
         {% if eixo_selecionado %}
-            <input type="hidden" name="eixo" value="{{ eixo_selecionado }}">
+        <input type="hidden" name="eixo" value="{{ eixo_selecionado }}">
         {% endif %}
-        
+
         <div class="input-group search-bar-container">
-            <input type="text" name="busca" class="form-control bg-dark text-white border-0 py-3" 
-                   placeholder="Pesquisar artigos por título, autor ou tecnologia..." 
-                   value="{{ termo_busca|default:'' }}">
+            <input type="text" name="busca" class="form-control bg-dark text-white border-0 py-3"
+                placeholder="Pesquisar artigos por título, autor ou tecnologia..." value="{{ termo_busca|default:'' }}">
             <button class="btn btn-dark" type="submit">🔍</button>
         </div>
     </form>
@@ -31,19 +38,19 @@
 <section class="container mb-5">
     <h5 class="text-white fw-bold mb-3">Eixos de Tecnologia</h5>
     <div class="d-flex flex-wrap gap-2">
-        
+
         <!-- Botão Todos os artigos -->
-        <a href="?{% if termo_busca %}busca={{ termo_busca }}{% endif %}" 
-           class="btn btn-filter {% if not eixo_selecionado %}active{% endif %}">
+        <a href="?{% if termo_busca %}busca={{ termo_busca }}{% endif %}"
+            class="btn btn-filter {% if not eixo_selecionado %}active{% endif %}">
             Todos os artigos
         </a>
 
         <!-- CÓDIGO CORRIGIDO: Loop limpo usando as propriedades reais do seu modelo Eixo -->
         {% for eixo in eixos %}
-            <a href="?eixo={{ eixo.id }}{% if termo_busca %}&busca={{ termo_busca }}{% endif %}" 
-               class="btn btn-filter {% if eixo_selecionado == eixo.id|slugify %}active{% endif %}">
-                {{ eixo.nome }}
-            </a>
+        <a href="?eixo={{ eixo.id }}{% if termo_busca %}&busca={{ termo_busca }}{% endif %}"
+            class="btn btn-filter {% if eixo_selecionado == eixo.id|slugify %}active{% endif %}">
+            {{ eixo.nome }}
+        </a>
         {% endfor %}
 
     </div>

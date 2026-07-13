@@ -1,1 +1,51 @@
-<h1>Teste Login</h1>
+{% extends 'motorartigos/base_clean.html' %}
+{% load static %}
+
+{% block content %}
+<main class="d-flex flex-column align-items-center justify-content-center min-vh-100">
+    
+    <!-- Logo DevBlog Django -->
+    <div class="mb-4 text-center">
+        <h2 class="text-white fw-bold">DevBlog <span class="text-secondary fs-4 fw-normal">Django</span></h2>
+    </div>
+
+    <!-- Card de Login -->
+    <div class="card card-custom border border-dark-light p-4 shadow-lg" style="width: 100%; max-width: 440px;">
+        <div class="text-center mb-4">
+            <h4 class="text-white fw-bold">Acesse sua conta</h4>
+            <p class="text-secondary small">Bem-vindo ao DevBlog Django</p>
+        </div>
+
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label class="text-secondary small mb-1 fw-bold">E-mail ou Usuário</label>
+                <input type="text" name="username" class="form-control bg-dark text-white border-0 py-2" required>
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex justify-content-between">
+                    <label class="text-secondary small mb-1 fw-bold">Senha</label>
+                    <a href="#" class="text-primary-custom small text-decoration-none">Esqueceu a senha?</a>
+                </div>
+                <input type="password" name="password" class="form-control bg-dark text-white border-0 py-2" required>
+            </div>
+
+            <button type="submit" class="btn btn-outline-light w-100 py-2 fw-bold mb-3">
+                Entrar na minha conta
+            </button>
+        </form>
+
+        <div class="text-center my-3 text-secondary small">OU</div>
+
+        <a href="#" class="btn btn-dark w-100 py-2 border border-secondary text-white">
+            <i class="fa-brands fa-github me-2"></i> Fazer login com o GitHub
+        </a>
+
+        <div class="text-center mt-4 text-secondary small">
+            Não tem uma conta? <a href="{% url 'cadastro' %}" class="text-primary-custom text-decoration-none">Veja nossos planos</a>
+        </div>
+    </div>
+</main>
+{% endblock %}

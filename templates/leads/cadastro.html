@@ -1,1 +1,75 @@
-<h1>Teste Cadastro</h1>
+{% extends 'motorartigos/base_clean.html' %}
+{% load static %}
+
+{% block content %}
+<main class="container-fluid min-vh-100 d-flex align-items-center justify-content-center py-5">
+    <div class="row w-100 justify-content-center">
+        
+        <!-- Coluna de Copy (Autoridade e Benefícios) -->
+        <div class="col-12 col-lg-5 mb-5 mb-lg-0 px-lg-5">
+            <h1 class="text-white fw-bold display-5 mb-3">Transforme sua carreira com Django, IA e Ciência de Dados</h1>
+            <p class="text-secondary fs-5 mb-4">Junte-se a uma comunidade ativa e tenha acesso a E-books, livros especiais e projetos práticos.</p>
+            
+            <div class="d-flex flex-column gap-3 mb-4">
+                <div class="text-white"><i class="fas fa-book-open text-primary-custom me-3"></i> 📚 Biblioteca de E-books exclusivos.</div>
+                <div class="text-white"><i class="fas fa-robot text-primary-custom me-3"></i> 🤖 Foco prático em Django e IA.</div>
+                <div class="text-white"><i class="fas fa-users text-primary-custom me-3"></i> 🤝 Comunidade unida e ativa.</div>
+            </div>
+
+            <div class="p-3 border-start border-primary-custom bg-dark rounded">
+                <p class="text-white mb-1 fw-bold">Apenas R$ 14,90/mês (plano anual)</p>
+                <p class="text-secondary small m-0">Após o período de 7 dias de acesso total gratuito, sem compromisso.</p>
+            </div>
+        </div>
+
+        <!-- Coluna do Formulário -->
+        <div class="col-12 col-lg-4">
+            <div class="card card-custom border border-dark-light p-4 shadow-lg">
+                <h4 class="text-white fw-bold mb-1">Crie sua conta gratuita</h4>
+                <p class="text-secondary small mb-4">Essa condição especial está disponível para as próximas 50 inscrições.</p>
+
+                <form method="POST" action="{% url 'cadastro' %}">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="text-secondary small mb-1 fw-bold">Nome Completo</label>
+                        <input type="text" name="nome" class="form-control bg-dark text-white border-0 py-2" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-secondary small mb-1 fw-bold">E-mail</label>
+                        <input type="email" name="email" class="form-control bg-dark text-white border-0 py-2" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-secondary small mb-1 fw-bold">WhatsApp</label>
+                        <input type="tel" name="whatsapp" class="form-control bg-dark text-white border-0 py-2" placeholder="(61) 9XXXX-XXXX" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-secondary small mb-1 fw-bold">Senha</label>
+                        <input type="password" name="password" class="form-control bg-dark text-white border-0 py-2" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="text-secondary small mb-1 fw-bold">Confirmar Senha</label>
+                        <input type="password" name="confirm_password" class="form-control bg-dark text-white border-0 py-2" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-light w-100 py-2 fw-bold mb-3">
+                        Criar minha conta gratuita
+                    </button>
+                </form>
+
+                <div class="text-center mt-2 text-secondary small">
+                    Já possui uma conta? <a href="{% url 'login' %}" class="text-primary-custom text-decoration-none fw-bold">Entre aqui</a>
+                </div>
+            </div>
+            
+            <p class="text-center text-secondary small mt-3">
+                Mais de 500 desenvolvedores já estão atualizando suas carreiras conosco.
+            </p>
+        </div>
+    </div>
+</main>
+{% endblock %}
