@@ -18,23 +18,18 @@
 
         <form method="POST" action="{% url 'login' %}">
             {% csrf_token %}
+             
+            <div class="row">
+                {% for field in form.visible_fields %}
+                    <div class="col-12 mb-3">
+                       <label for=""{{ field.id_for_label}}>{{ field.label }}</label>
+                       {{field}}
+                    </div>
+                   
+                {% endfor %}
+                <button type="submit" class="btn btn-primary w-100 py-2">Logar</button>
+            </div>
             
-            <div class="mb-3">
-                <label class="text-secondary small mb-1 fw-bold">E-mail ou Usuário</label>
-                <input type="text" name="username" class="form-control bg-dark text-white border-0 py-2" required>
-            </div>
-
-            <div class="mb-4">
-                <div class="d-flex justify-content-between">
-                    <label class="text-secondary small mb-1 fw-bold">Senha</label>
-                    <a href="#" class="text-primary-custom small text-decoration-none">Esqueceu a senha?</a>
-                </div>
-                <input type="password" name="password" class="form-control bg-dark text-white border-0 py-2" required>
-            </div>
-
-            <button type="submit" class="btn btn-outline-light w-100 py-2 fw-bold mb-3">
-                Entrar na minha conta
-            </button>
         </form>
 
         <div class="text-center my-3 text-secondary small">OU</div>
